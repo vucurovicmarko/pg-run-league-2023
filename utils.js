@@ -1,90 +1,3 @@
-export function getResults(statistics, bestTimeRacesCount, limit) {
-  let results = statistics.filter(
-    (item) => item.sortedRacesTime.length >= bestTimeRacesCount
-  );
-
-  results.map((item) => {
-    const bestTimes = [...item.sortedRacesTime].splice(0, bestTimeRacesCount);
-
-    item.bestTimes = bestTimes;
-    item.bestTimesTotal = calculateTotalTime(bestTimes);
-  });
-
-  results.sort(
-    (a, b) =>
-      convertStringTimeToMilliseconds(a.bestTimesTotal) -
-      convertStringTimeToMilliseconds(b.bestTimesTotal)
-  );
-
-  results.map((item, index) => {
-    item.rang = index + 1;
-    return item;
-  });
-
-  if (limit) {
-    results = results.slice(0, limit);
-  }
-
-  return results;
-}
-
-export function getGenderStatistics(statistics, gender) {
-  return statistics.filter((item) => item.gender === gender);
-}
-
-export function getStatistics(runners, races) {
-  const runnersIdList = getRunnersIdList(runners);
-
-  const initialUnionRacesTime = runnersIdList.reduce((memo, id) => {
-    memo[id] = Array(races.length);
-    return memo;
-  }, {});
-
-  const unionRacesTime = races.reduce((memo, race, index) => {
-    race.forEach((runner) => {
-      memo[runner.bib][index] = runner.time;
-    });
-
-    return memo;
-  }, initialUnionRacesTime);
-
-  const sortedRacesTime = runnersIdList.reduce((memo, id) => {
-    const bestTimeList = unionRacesTime[id].filter(
-      (item) => item !== undefined
-    );
-    const bestTimeInMillisecondsList = bestTimeList.map(
-      convertStringTimeToMilliseconds
-    );
-
-    bestTimeList.sort(
-      (a, b) =>
-        bestTimeInMillisecondsList[bestTimeList.indexOf(a)] -
-        bestTimeInMillisecondsList[bestTimeList.indexOf(b)]
-    );
-
-    memo[id] = bestTimeList;
-
-    return memo;
-  }, {});
-
-  const statistics = runnersIdList.reduce((memo, id) => {
-    const { name, age, gender } = runners[id];
-
-    memo.push({
-      id,
-      name,
-      age,
-      gender,
-      unionRacesTime: unionRacesTime[id],
-      sortedRacesTime: sortedRacesTime[id],
-    });
-
-    return memo;
-  }, []);
-
-  return statistics;
-}
-
 export function getRunnersIdList(runners) {
   return Array.from(new Set(Object.keys(runners)));
 }
@@ -142,4 +55,10 @@ export function calculateTotalTime(timeStrings) {
   ].join(":");
 
   return formattedTime;
+}
+
+export function logSeparation() {
+  console.log("\n");
+  console.log("----");
+  console.log("\n");
 }
