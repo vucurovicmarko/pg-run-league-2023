@@ -56,9 +56,3 @@ export function calculateTotalTime(timeStrings) {
 
   return formattedTime;
 }
-
-export function logSeparation() {
-  console.log("\n");
-  console.log("----");
-  console.log("\n");
-}
