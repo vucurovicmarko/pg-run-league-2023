@@ -25,6 +25,7 @@ const maleWinners = getResults(
   bestTimeRacesCount,
   RESULTS_LIMIT
 );
+const maleResults = getResults(maleStatistics, bestTimeRacesCount);
 
 // Female
 const femaleStatistics = getGenderStatistics(statistics, "Ž");
@@ -34,6 +35,7 @@ const femaleWinners = getResults(
   bestTimeRacesCount,
   RESULTS_LIMIT
 );
+const femaleResults = getResults(femaleStatistics, bestTimeRacesCount);
 
 const resultsContainer = document.getElementById("results");
 
@@ -48,6 +50,11 @@ addSectionToDOM({
 });
 
 addSectionToDOM({
+  title: `MALE RESULTS - TOP (${maleResults.length}):`,
+  data: maleResults,
+});
+
+addSectionToDOM({
   title: `FEMALE BEST RACE - TOP (${femaleBestRace.length})`,
   data: femaleBestRace,
 });
@@ -55,6 +62,11 @@ addSectionToDOM({
 addSectionToDOM({
   title: `FEMALE WINNERS - TOP (${femaleWinners.length}):`,
   data: femaleWinners,
+});
+
+addSectionToDOM({
+  title: `FEMALE RESULTS - TOP (${femaleResults.length}):`,
+  data: femaleResults,
 });
 
 function createTitleElement(title) {
