@@ -105,7 +105,7 @@ function appendSectionToDOM({
   }
 
   theadElementTr.appendChild(
-    createThElement(`Best (${bestTimeRacesCount}) times`)
+    createThElement(`Best times (${bestTimeRacesCount})`)
   );
   theadElementTr.appendChild(createThElement("Best times total"));
 
