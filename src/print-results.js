@@ -114,8 +114,6 @@ function appendSectionToDOM({
 
   const tbodyElement = document.createElement("tbody");
 
-  console.log(data[1].unionRacesTime.length);
-
   data.forEach((item) => {
     const tbodyElementTr = document.createElement("tr");
 
