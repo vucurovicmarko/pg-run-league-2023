@@ -7,4 +7,4 @@ import { printResults } from "./print-results.js";
 // Throws error if new runners are introduced, runners import should be updated with newcomers
 checkNewRunners(runners, races);
 
-printResults(runners, races);
+printResults();

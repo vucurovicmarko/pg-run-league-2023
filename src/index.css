@@ -28,11 +28,15 @@ tbody tr:nth-child(odd) {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-table tbody td#rang {
+tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+tbody td#rang {
   font-weight: bold;
 }
 
-table tbody td#best-times-total {
+tbody td#best-times-total {
   font-weight: bold;
   color: #28a745;
 }
@@ -58,4 +62,27 @@ table tbody td#best-times-total {
 
 #results section:not(:last-child) {
   margin-bottom: 48px;
+}
+
+.winning-badge {
+  padding: 0.25em 0.4em;
+  font-size: 75%;
+  font-weight: 700;
+  border-radius: 0.25rem;
+  margin-left: 6px;
+}
+
+.winning-badge--1 {
+  color: white;
+  background-color: goldenrod;
+}
+
+.winning-badge--2 {
+  color: white;
+  background-color: #aaaaaa;
+}
+
+.winning-badge--3 {
+  color: white;
+  background-color: #cd7f32;
 }

@@ -1,14 +1,16 @@
+import runners from "./runners.js";
+import races from "./races/index.js";
 import { getGenderStatistics, getStatistics } from "./statistics.js";
 import { getResults } from "./results.js";
 
-export function printResults(runners, races) {
-  let bestTimeRacesCount = 4;
+let bestTimeRacesCount = 4;
 
-  // Display current results if an insufficient number of races have been held
-  if (races.length < bestTimeRacesCount) {
-    bestTimeRacesCount = races.length;
-  }
+// Display current results if an insufficient number of races have been held
+if (races.length < bestTimeRacesCount) {
+  bestTimeRacesCount = races.length;
+}
 
+export function printResults() {
   const statistics = getStatistics(runners, races);
 
   const results = getResults(statistics, bestTimeRacesCount);
@@ -27,7 +29,6 @@ export function printResults(runners, races) {
     title: `Everyone (best ${bestTimeRacesCount} races)`,
     data: results,
     bestTimeRacesCount,
-    racesHeld: races.length,
   });
 
   appendSectionToDOM({
@@ -35,7 +36,6 @@ export function printResults(runners, races) {
     title: `Male (best ${bestTimeRacesCount} races)`,
     data: maleResults,
     bestTimeRacesCount,
-    racesHeld: races.length,
   });
 
   appendSectionToDOM({
@@ -43,7 +43,6 @@ export function printResults(runners, races) {
     title: `Female (best ${bestTimeRacesCount} races)`,
     data: femaleResults,
     bestTimeRacesCount,
-    racesHeld: races.length,
   });
 
   appendSectionToDOM({
@@ -51,7 +50,6 @@ export function printResults(runners, races) {
     title: "Everyone best time",
     data: bestTimeResults,
     bestTimeRacesCount: 1,
-    racesHeld: races.length,
   });
 
   appendSectionToDOM({
@@ -59,7 +57,6 @@ export function printResults(runners, races) {
     title: "Male best time",
     data: maleBestTimeResults,
     bestTimeRacesCount: 1,
-    racesHeld: races.length,
   });
 
   appendSectionToDOM({
@@ -67,7 +64,6 @@ export function printResults(runners, races) {
     title: "Female best time",
     data: femaleBestTimeResults,
     bestTimeRacesCount: 1,
-    racesHeld: races.length,
   });
 }
 
@@ -75,9 +71,12 @@ function appendSectionToDOM({
   sectionId,
   title,
   data,
-  bestTimeRacesCount,
-  racesHeld,
+  bestTimeRacesCount = bestTimeRacesCount,
 }) {
+  let numberOfWinnersPerGender = 3;
+  let maleCounter = 0;
+  let femaleCounter = 0;
+
   const resultsContainer = document.getElementById("results");
 
   const sectionElement = document.createElement("section");
@@ -100,7 +99,7 @@ function appendSectionToDOM({
   theadElementTr.appendChild(createThElement("Age"));
   theadElementTr.appendChild(createThElement("Gender"));
 
-  for (let index = 1; index <= racesHeld; index++) {
+  for (let index = 1; index <= races.length; index++) {
     theadElementTr.appendChild(createThElement(`Race ${index}`));
   }
 
@@ -114,7 +113,13 @@ function appendSectionToDOM({
 
   const tbodyElement = document.createElement("tbody");
 
-  data.forEach((item) => {
+  data.forEach((item, index) => {
+    if (item.gender === "M") {
+      maleCounter++;
+    } else if (item.gender === "Ž") {
+      femaleCounter++;
+    }
+
     const tbodyElementTr = document.createElement("tr");
 
     const rangTdElement = createTdElement(`${item.rang}.`);
@@ -122,7 +127,21 @@ function appendSectionToDOM({
 
     tbodyElementTr.appendChild(rangTdElement);
     tbodyElementTr.appendChild(createTdElement(item.id));
-    tbodyElementTr.appendChild(createTdElement(item.name));
+
+    const nameTdElement = createTdElement(item.name);
+
+    if (item.gender === "M" && maleCounter <= numberOfWinnersPerGender) {
+      const winnerBadgeElement = createWinningBadgeElement(maleCounter);
+      nameTdElement.appendChild(winnerBadgeElement);
+    } else if (
+      item.gender === "Ž" &&
+      femaleCounter <= numberOfWinnersPerGender
+    ) {
+      const winnerBadgeElement = createWinningBadgeElement(femaleCounter);
+      nameTdElement.appendChild(winnerBadgeElement);
+    }
+
+    tbodyElementTr.appendChild(nameTdElement);
     tbodyElementTr.appendChild(createTdElement(item.age));
     tbodyElementTr.appendChild(createTdElement(item.gender));
 
@@ -165,4 +184,12 @@ function createTdElement(data) {
   const thElement = document.createElement("td");
   thElement.textContent = data;
   return thElement;
+}
+
+function createWinningBadgeElement(place) {
+  const winnerBadgeElement = document.createElement("span");
+  winnerBadgeElement.textContent = place;
+  winnerBadgeElement.className = `winning-badge winning-badge--${place}`;
+
+  return winnerBadgeElement;
 }
