@@ -52,6 +52,10 @@ table tbody td#best-times-total {
   padding-bottom: 48px;
 }
 
+#results > section {
+  overflow: auto;
+}
+
 #results section:not(:last-child) {
   margin-bottom: 48px;
 }
