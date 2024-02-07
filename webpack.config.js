@@ -8,7 +8,16 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      favicon: "./src/favicon.ico",
       template: "./src/index.html",
     }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+    ],
+  },
 };
