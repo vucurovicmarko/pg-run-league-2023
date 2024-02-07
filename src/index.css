@@ -32,11 +32,11 @@ tbody tr:hover {
   background-color: rgba(0, 0, 0, 0.075);
 }
 
-tbody td#rang {
+tbody td.rang {
   font-weight: bold;
 }
 
-tbody td#best-times-total {
+tbody td.best-times-total {
   font-weight: bold;
   color: #28a745;
 }

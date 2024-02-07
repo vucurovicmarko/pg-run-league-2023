@@ -123,7 +123,7 @@ function appendSectionToDOM({
     const tbodyElementTr = document.createElement("tr");
 
     const rangTdElement = createTdElement(`${item.rang}.`);
-    rangTdElement.id = "rang";
+    rangTdElement.className = "rang";
 
     tbodyElementTr.appendChild(rangTdElement);
     tbodyElementTr.appendChild(createTdElement(item.id));
@@ -154,7 +154,7 @@ function appendSectionToDOM({
     tbodyElementTr.appendChild(createTdElement(item.bestTimes.join(", ")));
 
     const bestTimesTotalTdElement = createTdElement(item.bestTimesTotal);
-    bestTimesTotalTdElement.id = "best-times-total";
+    bestTimesTotalTdElement.className = "best-times-total";
 
     tbodyElementTr.appendChild(bestTimesTotalTdElement);
 
