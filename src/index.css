@@ -36,6 +36,13 @@ table tbody td#best-times-total {
   color: #28a745;
 }
 
+.navs {
+  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  background-color: white;
+}
+
 .navs nav:not(:last-child) {
   margin-bottom: 8px;
 }
