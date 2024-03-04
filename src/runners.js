@@ -409,6 +409,11 @@ export default {
     age: 2009,
     gender: "M",
   },
+  "#84": {
+    name: "Anđela Obradović",
+    age: 1988,
+    gender: "Ž",
+  },
   "#100": {
     name: "Ognjen Stamatović",
     age: 2016,
